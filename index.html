@@ -836,10 +836,33 @@ ul{list-style:none}
   <svg viewBox="0 0 24 24" fill="currentColor" width="28" height="28"><path d="M24 12.073c0-6.627-5.373-12-12-12s-12 5.373-12 12c0 5.99 4.388 10.954 10.125 11.854v-8.385H7.078v-3.47h3.047V9.43c0-3.007 1.792-4.669 4.533-4.669 1.312 0 2.686.235 2.686.235v2.953H15.83c-1.491 0-1.956.925-1.956 1.874v2.25h3.328l-.532 3.47h-2.796v8.385C19.612 23.027 24 18.062 24 12.073z"/></svg>
 </a>
 
+<!-- SUCCESS TOAST POPUP -->
+<div class="toast-overlay" id="toastOverlay"></div>
+<div class="toast-popup" id="toastPopup">
+  <div class="toast-icon">
+    <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2.5"><polyline points="20 6 9 17 4 12"/></svg>
+  </div>
+  <h3>Cảm ơn bạn!</h3>
+  <p>Yêu cầu của bạn đã được gửi thành công. Chúng tôi sẽ liên hệ lại trong 24 giờ.</p>
+  <button class="toast-btn" onclick="closeToast()">Đóng</button>
+</div>
+
 <style>
 .floating-fb{position:fixed;left:20px;bottom:100px;width:56px;height:56px;border-radius:50%;background:#1877f2;color:#fff;display:flex;align-items:center;justify-content:center;box-shadow:0 4px 12px rgba(24,119,242,.4);z-index:999;transition:transform .3s,box-shadow .3s}
 .floating-fb:hover{transform:scale(1.1);box-shadow:0 6px 20px rgba(24,119,242,.5)}
 @media(max-width:768px){.floating-fb{left:12px;bottom:80px;width:48px;height:48px}.floating-fb svg{width:24px;height:24px}}
+
+/* SUCCESS TOAST */
+.toast-popup{position:fixed;top:50%;left:50%;transform:translate(-50%,-50%) scale(.8);background:#fff;border-radius:16px;padding:40px;max-width:380px;width:90%;text-align:center;box-shadow:0 20px 60px rgba(0,0,0,.2);z-index:10000;opacity:0;visibility:hidden;transition:all .3s ease}
+.toast-popup.show{opacity:1;visibility:visible;transform:translate(-50%,-50%) scale(1)}
+.toast-popup .toast-icon{width:64px;height:64px;border-radius:50%;background:#e8f5e9;display:flex;align-items:center;justify-content:center;margin:0 auto 20px}
+.toast-popup .toast-icon svg{width:32px;height:32px;color:#4caf50}
+.toast-popup h3{font-family:var(--font-heading);font-size:22px;color:var(--dark);margin-bottom:8px}
+.toast-popup p{font-size:14px;color:var(--text-light);margin-bottom:20px}
+.toast-popup .toast-btn{display:inline-flex;align-items:center;gap:8px;background:var(--green);color:#fff;padding:12px 28px;border-radius:8px;font-weight:600;border:none;cursor:pointer}
+.toast-popup .toast-btn:hover{background:var(--green-dark)}
+.toast-overlay{position:fixed;inset:0;background:rgba(0,0,0,.5);z-index:9999;opacity:0;visibility:hidden;transition:opacity .3s}
+.toast-overlay.show{opacity:1;visibility:visible}
 </style>
 
 <!-- PRODUCT MODAL -->
@@ -1052,7 +1075,18 @@ document.getElementById('contactForm').addEventListener('submit',function(e){
   var subject=encodeURIComponent("Yêu cầu tư vấn từ: "+name);
   var body=encodeURIComponent("Họ và tên: "+name+"\nSố điện thoại: "+phone+"\nEmail: "+email+"\n\nNội dung:\n"+message);
   window.location.href="mailto:ctyankhaiminh@gmail.com?subject="+subject+"&body="+body;
+  showToast();
 });
+function showToast(){
+  document.getElementById('toastOverlay').classList.add('show');
+  document.getElementById('toastPopup').classList.add('show');
+}
+function closeToast(){
+  document.getElementById('toastOverlay').classList.remove('show');
+  document.getElementById('toastPopup').classList.remove('show');
+  document.getElementById('contactForm').reset();
+}
+document.getElementById('toastOverlay').addEventListener('click',closeToast);
 </script>
 
 </body>
